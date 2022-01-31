@@ -1,0 +1,46 @@
+name: 'Generate a build suffix'
+description: |
+  If applicable generate an unstable build suffix. For stable builds no suffix will be generated.
+  For unstable builds the suffix will contain the current timestamp plus first 8 characters of the 
+  SHA for the commit at the current HEAD.  
+inputs:
+  stable-strategy:
+    description: The method for determining a stable branch. Options - branch, tag, always, never
+    default: "branch"
+  stable-branches-regex:
+      description: Regular expression to determine a stable branch
+      required: false
+      default: "master"
+outputs:
+  is-stable:
+    description: "Is build stable"
+    value: ${{ steps.generate_build_suffix.outputs.is-stable }}
+  timestamp:
+    description: "Build timestamp"
+    value: ${{ steps.generate_build_suffix.outputs.timestamp }}
+  git-sha:
+    description: "Git SHA"
+    value: ${{ steps.generate_build_suffix.outputs.git-sha }}
+  git-branch:
+    description: "Git Branch"
+    value: ${{ steps.generate_build_suffix.outputs.git-branch }}
+  helm:
+    description: "Helm version suffix"
+    value: ${{ steps.generate_build_suffix.outputs.helm }}
+  docker:
+    description: "Docker version suffix"
+    value: ${{ steps.generate_build_suffix.outputs.docker }}
+runs:
+  using: composite
+  steps:
+  - uses: actions/setup-python@v2
+    with:
+      python-version: 3.7
+  - shell: bash
+    id: generate_build_suffix
+    env:
+      STABLE_STRATEGY: ${{ inputs.stable-strategy }}
+      STABLE_BRANCHES_REGEX: ${{ inputs.stable-branches-regex }}
+    run: $GITHUB_ACTION_PATH/generate_build_suffix.py
+
+      
