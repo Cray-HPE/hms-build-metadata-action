@@ -1,4 +1,4 @@
-name: 'Generate a build suffix'
+name: 'Generate a build metadata'
 description: |
   If applicable generate an unstable build suffix. For stable builds no suffix will be generated.
   For unstable builds the suffix will contain the current timestamp plus first 8 characters of the 
