@@ -1,16 +1,17 @@
-name: 'Generate a build metadata'
+name: "Generate a build metadata"
 description: |
   If applicable generate an unstable build suffix. For stable builds no suffix will be generated.
   For unstable builds the suffix will contain the current timestamp plus first 8 characters of the 
-  SHA for the commit at the current HEAD.  
+  SHA for the commit at the current HEAD.
 inputs:
   stable-strategy:
     description: The method for determining a stable branch. Options - branch, tag, always, never
     default: "branch"
+    required: false
   stable-branches-regex:
-      description: Regular expression to determine a stable branch
-      required: false
-      default: "master"
+    description: Regular expression to determine a stable branch
+    required: false
+    default: "master"
 outputs:
   is-stable:
     description: "Is build stable"
@@ -33,14 +34,12 @@ outputs:
 runs:
   using: composite
   steps:
-  - uses: actions/setup-python@v2
-    with:
-      python-version: 3.7
-  - shell: bash
-    id: generate_build_metadata
-    env:
-      STABLE_STRATEGY: ${{ inputs.stable-strategy }}
-      STABLE_BRANCHES_REGEX: ${{ inputs.stable-branches-regex }}
-    run: $GITHUB_ACTION_PATH/generate_build_metadata.py
-
-      
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - shell: bash
+      id: generate_build_metadata
+      env:
+        STABLE_STRATEGY: ${{ inputs.stable-strategy }}
+        STABLE_BRANCHES_REGEX: ${{ inputs.stable-branches-regex }}
+      run: $GITHUB_ACTION_PATH/generate_build_metadata.py
