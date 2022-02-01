@@ -14,22 +14,22 @@ inputs:
 outputs:
   is-stable:
     description: "Is build stable"
-    value: ${{ steps.generate_build_suffix.outputs.is-stable }}
+    value: ${{ steps.generate_build_metadata.outputs.is-stable }}
   timestamp:
     description: "Build timestamp"
-    value: ${{ steps.generate_build_suffix.outputs.timestamp }}
+    value: ${{ steps.generate_build_metadata.outputs.timestamp }}
   git-sha:
     description: "Git SHA"
-    value: ${{ steps.generate_build_suffix.outputs.git-sha }}
+    value: ${{ steps.generate_build_metadata.outputs.git-sha }}
   git-branch:
     description: "Git Branch"
-    value: ${{ steps.generate_build_suffix.outputs.git-branch }}
+    value: ${{ steps.generate_build_metadata.outputs.git-branch }}
   helm:
     description: "Helm version suffix"
-    value: ${{ steps.generate_build_suffix.outputs.helm }}
+    value: ${{ steps.generate_build_metadata.outputs.helm }}
   docker:
     description: "Docker version suffix"
-    value: ${{ steps.generate_build_suffix.outputs.docker }}
+    value: ${{ steps.generate_build_metadata.outputs.docker }}
 runs:
   using: composite
   steps:
@@ -37,10 +37,10 @@ runs:
     with:
       python-version: 3.7
   - shell: bash
-    id: generate_build_suffix
+    id: generate_build_metadata
     env:
       STABLE_STRATEGY: ${{ inputs.stable-strategy }}
       STABLE_BRANCHES_REGEX: ${{ inputs.stable-branches-regex }}
-    run: $GITHUB_ACTION_PATH/generate_build_suffix.py
+    run: $GITHUB_ACTION_PATH/generate_build_metadata.py
 
       
