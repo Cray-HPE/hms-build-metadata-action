@@ -95,7 +95,7 @@ jobs:
 ### Docker container image
 The following is a contrived example of how to use the generate-build-metadata action to generate build metadata for Docker container images. For a production use of this action see the [build_and_release_image.yaml workflow in the hms-build-image-workflows repository](https://github.com/Cray-HPE/hms-build-image-workflows/blob/main/.github/workflows/build_and_release_image.yaml).
 ```yaml
-ame: Build and Publish Docker images
+name: Build and Publish Docker images
 on:
   workflow_call:
     inputs:
