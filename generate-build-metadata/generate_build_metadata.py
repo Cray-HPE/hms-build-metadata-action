@@ -107,5 +107,8 @@ print("Helm Suffix:  ", result["helm"])
 print("Docker Suffix:", result["docker"])
 print()
 
-for name in result:
-    print("::set-output name={}::{}".format(name, result[name]))
+with open(os.getenv("GITHUB_OUTPUT"), "a") as f:
+    for name in result:
+        output = "{}={}\n".format(name, result[name])
+        print(output)
+        f.write(output)    
